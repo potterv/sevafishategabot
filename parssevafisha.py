@@ -43,7 +43,9 @@ def cinemaRead():
     except:
         print('not correct match css')
         #return films
-
+'''
+Метод для чтения данных
+'''
 def cinema_Read():
     url_cinema='https://afisha.sevastopol.press/movie'
     s=requests.get(url_cinema)
@@ -52,26 +54,21 @@ def cinema_Read():
     CinemaValues=[]
     listSeance=[]
     listKinoteatr=[]
+    listGrafSeance=[]
     grafSeance={}
     films={}
     move=''
     i=0
+    j=0
     try:
         cinema_list=b.select('.col-2-3 .row')[1]
         for cinema in cinema_list.select('.col-1-2'):
-
             nameCinema=cinema.select('h2')[0].getText()
+            #print(nameCinema)
             CinemaKys.append(nameCinema)
-            #nmaeCinemaKys.append(''.join([nameFilm,'\n']))
             janrCinema=cinema.select('.genre')[0].getText()
             CinemaValues.append(janrCinema)
-
             seances=cinema.select('.seance td')
-            #print(seances[0].getText())
-            #films[nameCinema]=janrCinema
-            #films1=sorted(films.items,kye=operator.itemgetter(0))
-
-            #print(len(seances))
             listKinoteatr.clear()
             listSeance.clear()
             i=0
@@ -80,27 +77,29 @@ def cinema_Read():
                     listKinoteatr.append(seances[count].getText())
               else:
                 listSeance.append(seances[count].getText())
-            for kinoteatr in  listKinoteatr:
-                grafSeance[kinoteatr]=listSeance[i].split(' ')
-                i+=i
+                #print(seances[count].getText())
 
-            #print(listKinoteatr)
-            #print(listSeance)
-            #grafSeance[listKinoteatr]=listSeance
+
+            for kinoteatr in  listKinoteatr:
+                grafSeance[kinoteatr]=' '
+                #listSeance[i].split(' ')[:-1]
+                #grafSeance[kinoteatr]=listSeance
+                listGrafSeance.append(grafSeance)
+                i+=i
             #print(grafSeance)
             films[nameCinema]=[janrCinema,grafSeance]
+            j=+j
 
-                #print(''.join(['', str(seance.getText())]))
-            #print('')
-        print(films)
-
- #       for film in films:
- #           move=''.join([move,film])
         return films
-
     except:
         print('not correct match css')
-        #return films
 
-if __name__ =='__main__':
-    cinema_Read()
+
+def sortKeysDict(dicObg):
+    listDicKeys=dicObg.keys()
+    listKeysSort=list(listDicKeys)
+    listKeysSort.sort()
+    return listKeysSort
+#if __name__ =='__main__':
+ #   print(cinema_Read())
+    #cinema_Read()
