@@ -11,27 +11,27 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(content_types=["text"])
 def send_messages(message): # Название функции не играет никакой роли, в принципе
-
-    listSortFilms=sortKeysDict(cinema_Read())
+    films=cinema_Read()
+    listSortFilms=sortKeysDict(films)
     for cinema in listSortFilms:
         #print(cinema)
         #print(cinema_Read().get(cinema)[0])
-        strText=' \n'.join([cinema,cinema_Read().get(cinema)[0]])
+        strText=' \n'.join([cinema,films.get(cinema)[0]])
         bot.send_message(message.chat.id, strText)
 
         #print(cinema_Read().get(cinema)[1])
-        listSortKinoteatr=sortKeysDict(cinema_Read().get(cinema)[1])
+        listSortKinoteatr=sortKeysDict(films.get(cinema)[1])
         for kinoteatr in listSortKinoteatr:
                  #print(kinoteatr)
                 # bot.send_message(message.chat.id, "kinoteatr", reply_markup=keyboard)
-                 #keyboard = types.InlineKeyboardMarkup()
+                keyboard = types.InlineKeyboardMarkup()
 
-                 for seance in cinema_Read().get(cinema)[1].get(kinoteatr):
+                for seance in films.get(cinema)[1].get(kinoteatr):
                    # print(seance)
-                    keyboard = types.InlineKeyboardMarkup()
+                    #keyboard = types.InlineKeyboardMarkup()
                     url_button = types.InlineKeyboardButton(text=seance, url="https://ya.ru")
-                    keyboard.add(url_button)
-                    bot.send_message(message.chat.id,kinoteatr,reply_markup=keyboard)
+                keyboard.add(url_button)
+                bot.send_message(message.chat.id,kinoteatr,reply_markup=keyboard)
                  #bot.send_message(message.chat.id, kinoteatr)
         #bot.send_message(message.chat.id, cinemaRead())
 

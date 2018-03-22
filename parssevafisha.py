@@ -52,16 +52,18 @@ def cinema_Read():
     b=bs4.BeautifulSoup(s.text, "html.parser")
     CinemaKys=[]
     CinemaValues=[]
-    listSeance=[]
-    listKinoteatr=[]
+    #listSeance=[]
+    #listKinoteatr=[]
+    listGroupkino=[]
+    listGroupSeance=[]
     listGrafSeance=[]
-    grafSeance={}
     films={}
     move=''
     i=0
     j=0
     try:
         cinema_list=b.select('.col-2-3 .row')[1]
+
         for cinema in cinema_list.select('.col-1-2'):
             nameCinema=cinema.select('h2')[0].getText()
             #print(nameCinema)
@@ -69,27 +71,46 @@ def cinema_Read():
             janrCinema=cinema.select('.genre')[0].getText()
             CinemaValues.append(janrCinema)
             seances=cinema.select('.seance td')
-            listKinoteatr.clear()
-            listSeance.clear()
-            i=0
+
+
+            listKinoteatr=list()
+            listSeance=[]
             for count in range(len(seances)):
               if count%2==0:
                     listKinoteatr.append(seances[count].getText())
+
               else:
-                listSeance.append(seances[count].getText())
-                #print(seances[count].getText())
+                listSeance.append(seances[count].getText().split(' ')[:-1])
 
+            #print(listKinoteatr)
+            #print()
+            listGroupkino.append(listKinoteatr)
+            listGroupSeance.append(listSeance)
+            #print(listGroupkino)
+            #listKinoteatr.clear()
+            #print(listSeance)
 
-            for kinoteatr in  listKinoteatr:
-                grafSeance[kinoteatr]=' '
-                #listSeance[i].split(' ')[:-1]
-                #grafSeance[kinoteatr]=listSeance
+            grafSeance={}
+            i=0
+            for kinoteatr in  listGroupkino[j]:
+
+                grafSeance[kinoteatr]=listGroupSeance[j][i]
+
                 listGrafSeance.append(grafSeance)
-                i+=i
-            #print(grafSeance)
-            films[nameCinema]=[janrCinema,grafSeance]
-            j=+j
+                i=+1
+                #print(grafSeance)
 
+                #films[nameCinema]=[janrCinema,grafSeance]
+            j=+1
+        #print(listGrafSeance)
+        h=0
+        for k in CinemaKys:
+            films[k]=[CinemaValues[h],listGrafSeance[h]]
+            h=+1
+        print(films)
+        #print(listGroupkino[1])
+        #print(listGroupSeance)
+        #print(listGrafSeance)
         return films
     except:
         print('not correct match css')
