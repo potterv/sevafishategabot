@@ -54,10 +54,10 @@ def cinema_Read():
     CinemaKys=[]
     CinemaValues=[]
     listGroupkino=[]
-    listGroupSeance=[] # Список сеансов в кинотеатре
-    listGrafSeance=[] #Список словарей содержащих информацию о сеансах по кинотеатрам
-    films={} # итоговый словарь
-
+    listGroupSeance=[]
+    listGrafSeance=[]
+    films={}
+    move=''
     i=0
     j=0
     try:
@@ -110,4 +110,6 @@ def sortKeysDict(dicObg):
     listKeysSort=list(listDicKeys)
     listKeysSort.sort()
     return listKeysSort
-
+#if __name__ =='__main__':
+    #print(cinema_Read())
+    #cinema_Read()

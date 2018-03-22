@@ -9,9 +9,22 @@ import re
 
 bot = telebot.TeleBot(TOKEN)
 
+@bot.message_handler(commands=["start"])
+def start_(message):
+    name=''
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.add(*[types.KeyboardButton(name) for name in ['Обновить']])
+    msg=bot.send_message(message.chat.id,'Для просмотра тыкни обновить',reply_markup=keyboard)
+    if message=='Обновить':
+                 bot.send_message(message.chat.id,'/text')
+    #bot.register_next_step_handler(msg,name)
+
+
 @bot.message_handler(content_types=["text"])
+
 def send_messages(message): # Название функции не играет никакой роли, в принципе
     films=cinema_Read()
+
     listSortFilms=sortKeysDict(films)
 
     for cinema in listSortFilms:
@@ -32,8 +45,9 @@ def send_messages(message): # Название функции не играет 
         url_button = types.InlineKeyboardButton(text='Смотреть трейлер', url=''.join(["https://www.youtube.com/results?search_query=",cinema]))
         keyboard.add(url_button)
         bot.send_message(message.chat.id,strText,reply_markup=keyboard)
+    bot.send_message(message.chat.id,'Для просмотра тыкни обновить')
 
 
 if __name__ == '__main__':
 
-    bot.polling(none_stop=True)
+   bot.polling(none_stop=True)
