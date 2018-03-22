@@ -13,57 +13,27 @@ bot = telebot.TeleBot(TOKEN)
 def send_messages(message): # Название функции не играет никакой роли, в принципе
     films=cinema_Read()
     listSortFilms=sortKeysDict(films)
+
     for cinema in listSortFilms:
-        #print(cinema)
-        #print(cinema_Read().get(cinema)[0])
-        strText=' \n'.join([cinema,films.get(cinema)[0]])
-        bot.send_message(message.chat.id, strText)
 
-        #print(cinema_Read().get(cinema)[1])
         listSortKinoteatr=sortKeysDict(films.get(cinema)[1])
+        text=''
+
         for kinoteatr in listSortKinoteatr:
-                 #print(kinoteatr)
-                # bot.send_message(message.chat.id, "kinoteatr", reply_markup=keyboard)
+
                 keyboard = types.InlineKeyboardMarkup()
+                seances = films.get(cinema)[1].get(kinoteatr)
+                seance_=''
+                for seance in seances:
+                     seance_=' '.join([seance_,seance])
 
-                for seance in films.get(cinema)[1].get(kinoteatr):
-                   # print(seance)
-                    #keyboard = types.InlineKeyboardMarkup()
-                    url_button = types.InlineKeyboardButton(text=seance, url="https://ya.ru")
-                keyboard.add(url_button)
-                bot.send_message(message.chat.id,kinoteatr,reply_markup=keyboard)
-                 #bot.send_message(message.chat.id, kinoteatr)
-        #bot.send_message(message.chat.id, cinemaRead())
-
-    #keyboard = types.InlineKeyboardMarkup()
-    #url_button = types.InlineKeyboardButton(text="Перейти на Яндекс", url="https://ya.ru")
-    #keyboard.add(url_button)
-    #bot.send_message(message.chat.id, "Привет! Нажми на кнопку и перейди в поисковик.", reply_markup=keyboard)
+                text='\n'.join([text,kinoteatr, seance_])
+        strText=' \n'.join([cinema,films.get(cinema)[0],text])
+        url_button = types.InlineKeyboardButton(text='Смотреть трейлер', url=''.join(["https://www.youtube.com/results?search_query=",cinema]))
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id,strText,reply_markup=keyboard)
 
 
 if __name__ == '__main__':
 
-   '''
-    films=cinema_Read()
-    listSortFilms=sortKeysDict(films)
-    print(films)
-    #print(listSortFilms)
-
-    for cinema in listSortFilms:
-       #print('\n'+cinema+'\n')
-       #print(films.get(cinema)[0])
-       kinoteatrs=films.get(cinema)[1]
-       #print(kinoteatrs)
-        #listSortKinoteatr=sortKeysDict(cinema_Read().get(cinema)[1]))
-        #print(listSortKinoteatr)
-
-
-        listSortKinoteatr=sortKeysDict(cinema_Read().get(cinema)[1])
-        for kinoteatr in listSortKinoteatr:
-                 print(kinoteatr)
-                 print()
-                 for seance in cinema_Read().get(cinema)[1].get(kinoteatr):
-                    print(seance)
-    '''
-
-   bot.polling(none_stop=True)
+    bot.polling(none_stop=True)
