@@ -24,7 +24,7 @@ def start_(message):
 
 def send_messages(message): # Название функции не играет никакой роли, в принципе
     films=cinema_Read()
-
+    #print(films)
     listSortFilms=sortKeysDict(films)
 
     for cinema in listSortFilms:
@@ -33,10 +33,10 @@ def send_messages(message): # Название функции не играет 
         text=''
 
         for kinoteatr in listSortKinoteatr:
-
+                seance_=''
                 keyboard = types.InlineKeyboardMarkup()
                 seances = films.get(cinema)[1].get(kinoteatr)
-                seance_=''
+
                 for seance in seances:
                      seance_=' '.join([seance_,seance])
 

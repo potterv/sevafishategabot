@@ -90,16 +90,17 @@ def cinema_Read():
             for kinoteatr in  listGroupkino[j]:
 
                 grafSeance[kinoteatr]=listGroupSeance[j][i]
+                i=i+1
+            listGrafSeance.append(grafSeance)
 
-                listGrafSeance.append(grafSeance)
-                i=+1
 
-            j=+1
-
+            j=j+1
+        print(CinemaKys)
+        print(listGrafSeance)
         h=0
         for k in CinemaKys:
             films[k]=[CinemaValues[h],listGrafSeance[h]]
-            h=+1
+            h=h+1
         return films
     except:
         print('not correct match css')
