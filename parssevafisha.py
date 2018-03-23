@@ -95,8 +95,8 @@ def cinema_Read():
 
 
             j=j+1
-        print(CinemaKys)
-        print(listGrafSeance)
+        #print(CinemaKys)
+        #print(listGrafSeance)
         h=0
         for k in CinemaKys:
             films[k]=[CinemaValues[h],listGrafSeance[h]]
