@@ -8,9 +8,11 @@
 # Copyright:   (c) 092goncharvv 2018
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
+import pathlib
 
 import bs4, requests
 import operator
+import os.path as path
 '''
 Метод парсит https://afisha.sevastopol.press/movie фильмы текущего
 выводя информацию в виде строки
@@ -49,7 +51,7 @@ def cinemaRead():
 '''
 def cinema_Read():
     url_cinema='https://afisha.sevastopol.press/movie'
-    s=requests.get(url_cinema)
+    s=requests.get(url_cinema,verify=False)
     b=bs4.BeautifulSoup(s.text, "html.parser")
     CinemaKys=[]
     CinemaValues=[]
@@ -111,6 +113,6 @@ def sortKeysDict(dicObg):
     listKeysSort=list(listDicKeys)
     listKeysSort.sort()
     return listKeysSort
-#if __name__ =='__main__':
-    #print(cinema_Read())
-    #cinema_Read()
+# if __name__ =='__main__':
+#     print(cinema_Read())
+#     cinema_Read()
