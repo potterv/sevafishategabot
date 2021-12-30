@@ -25,7 +25,7 @@ def start_(message):
 
 def send_messages(message): # Название функции не играет никакой роли, в принципе
     films=cinema_Read()
-    print(films)
+    # print(films)
     listSortFilms=sortKeysDict(films)
 
     for cinema in listSortFilms:
